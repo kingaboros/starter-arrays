@@ -176,7 +176,6 @@ currenciesUnique.forEach(function (value, _, map) {
   console.log(`${value}: ${value}`); // key is the same as value, because a set doesn't have keys
 });
 
-*/
 
 ///////////////////////// DATA TRANSFORMATION METHODS ////////////////
 
@@ -184,17 +183,101 @@ currenciesUnique.forEach(function (value, _, map) {
 
 const euroToUsd = 1.1;
 
-const movementsUsd = movements.map(function (mov) {
-  // more aligned to functional programming
-  return mov * euroToUsd;
-});
+// const movementsUsd = movements.map(function (mov) {
+  //   // more aligned to functional programming
+  //   return mov * euroToUsd;
+  // });
+  
+  const movementsUsd = movements.map((mov) => mov * euroToUsd);
+  
+  console.log(movements);
+  console.log(movementsUsd);
+  
+  // same thing with for of loop, but it's a differen philosophy
+  
+  const movementsUsdFor = [];
+  
+  for (const mov of movements) movementsUsdFor.push(mov * euroToUsd);
+  console.log(movementsUsdFor);
+  
+  const movementsDescriptions = movements.map(
+    (mov, i) =>
+    `Movement ${i + 1}: You ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(
+      mov
+      )}`
+      );
+      
+      console.log(movementsDescriptions);
+
+      
+      // FILTER
+      
+      const deposits = movements.filter(function (mov) {
+        return mov > 0;
+      });
+      const withdrawals = movements.filter((mov) => mov < 0);
+      
+      console.log(movements);
+      console.log(deposits);
+      console.log(withdrawals);
+      
+      //using for of loop
+      
+      const depositsFor = [];
+      for (const mov of movements) if (mov > 0) depositsFor.push(mov);
+      
+      console.log(depositsFor);
+      
+
+
+// REDUCE
 
 console.log(movements);
-console.log(movementsUsd);
 
-// same thing with for of loop, but it's a differen philosophy
+// accumulator -> snowball
 
-const movementsUsdFor = [];
+// const balance = movements.reduce(function (accumulator, current, index, array) {
+//   console.log(`Iteration ${index}: ${accumulator}`);
+//   return accumulator + current;
+// }, 0);
 
-for (const mov of movements) movementsUsdFor.push(mov * euroToUsd);
-console.log(movementsUsdFor);
+//using the arrow function
+const balance = movements.reduce((acc, cur) => acc + cur, 0);
+
+console.log(balance);
+
+// for loop
+
+let balance2 = 0; // initial accumulator value
+for (const mov of movements) balance2 += mov;
+
+console.log(balance2);
+
+// Maximum value
+
+const max = movements.reduce((acc, mov) => {
+  if (acc > mov) return acc;
+  else return mov;
+}, movements[0]);
+
+console.log(max);
+
+*/
+
+//////////////// CHAINING METHODS //////////////
+
+const euroToUsd = 1.1;
+
+// Pipeline analogy
+
+const totalDepositsUSD = movements
+  .filter((mov) => mov < 0)
+  .map((mov, i, arr) => {
+    // the map method was called on the results of the movements.filter, so this is where we have to check if something went wrong.
+    console.log(arr);
+    return mov * euroToUsd;
+  })
+  // .map((mov) => mov * euroToUsd)
+  .reduce((acc, mov) => acc + mov, 0);
+
+console.log(totalDepositsUSD);
