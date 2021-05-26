@@ -262,7 +262,7 @@ const max = movements.reduce((acc, mov) => {
 
 console.log(max);
 
-*/
+
 
 //////////////// CHAINING METHODS //////////////
 
@@ -281,3 +281,83 @@ const totalDepositsUSD = movements
   .reduce((acc, mov) => acc + mov, 0);
 
 console.log(totalDepositsUSD);
+
+/////////// FIND METHOD //////////////////
+
+const firstWithdrawal = movements.find((mov) => mov < 0);
+console.log(movements);
+console.log(firstWithdrawal);
+
+console.log(accounts);
+
+const account = accounts.find((acc) => acc.owner === 'Jessica Davis');
+
+console.log(account);
+
+////// findIndex Method //////
+
+const index = accounts.findIndex(
+  (acc) => acc.username === currentAccount.username
+  );
+  
+
+
+//////// SORTING ARRAYS ////////
+
+// Strings
+const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+console.log(owners.sort());
+
+// Numbers
+console.log(movements);
+console.log(movements.sort()); // this doesn't work
+
+// return < 0, A will be before B (keep order)
+// return > 0, B will be before A (switch order)
+
+// Ascending
+// movements.sort((a, b) => {
+//   if (a > b) return 1;
+//   if (a < b) return -1;
+// });
+movements.sort((a, b) => a - b);
+console.log(movements);
+
+// Descending
+// movements.sort((a, b) => {
+//   if (a > b) return -1;
+//   if (a < b) return 1;
+// });
+movements.sort((a, b) => b - a);
+console.log(movements);
+*/
+
+////////////// CREATING AND FILLING ARRAYS ///////////////
+
+const arr2 = [1, 2, 3, 4, 5, 6, 7];
+
+// Empty arrays + fill method
+const x = new Array(7); // creates an array of 7 empty elements
+console.log(x);
+// console.log(x.map(() => 5)); // this doesn't work
+
+x.fill(1);
+x.fill(1, 3, 5); // start, end (but not included)
+console.log(x);
+
+arr2.fill(23, 4, 6);
+console.log(arr2);
+
+// Array.from
+
+const y = Array.from({ length: 7 }, () => 1); // recreating x array
+console.log(y);
+
+const z = Array.from({ length: 7 }, (_, i) => i + 1); //recreating arr2
+console.log(z);
+
+// practice
+
+// const movementUI = Array.from(document.querySelectorAll('.movements_value'));
+
+// console.log(movementUI);
